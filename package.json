@@ -1,0 +1,21 @@
+{
+  "name": "@ionrev/pro-tivity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "cd ./server && npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calebJustice7/MERNt-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/calebJustice7/MERNt-template#readme",
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
+}

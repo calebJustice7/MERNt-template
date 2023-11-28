@@ -1,0 +1,15 @@
+{
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": false,
+    "printWidth": 120,
+    "tabWidth": 4,
+    "key-spacing": [
+        "error",
+        {
+            "afterColon" : true,
+            "beforeColon" : false,
+            "mode": "strict"
+        }
+    ]
+}
