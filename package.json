@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "lint": "cd ./server && npm run lint && cd ../client && npm run lint"
+    "lint:ui": "cd ./client && npm run lint",
+    "lint:server": "cd ./server && npm run lint",
+    "lint": "concurrently \"npm run lint:ui\" \"npm run lint:server\""
   },
   "repository": {
     "type": "git",
