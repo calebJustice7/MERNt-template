@@ -1,12 +1,10 @@
-import express, { Request, Response } from "express";
+import dotenv from "dotenv";
+import Server from "./server";
 
-const app = express();
-const port = process.env.PORT || 3000;
+dotenv.config();
 
-app.get("/", (req: Request, res: Response) => {
-    res.send("Hello, TypeScript Express !This is a wiered applcationa oidi sdjsdlf sdjsdklj fsd");
-});
-
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+(async () => {
+    const server = new Server();
+    await server.initializeDatabase();
+    server.start();
+})();
