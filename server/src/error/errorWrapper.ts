@@ -1,6 +1,7 @@
 import { NextFunction, RequestHandler, Response, Request } from "express";
+import { logError } from "./logError";
 
-interface AsyncRequestHandler extends RequestHandler {
+export interface AsyncRequestHandler extends RequestHandler {
     (req: Request, res: Response, next: NextFunction): Promise<void>;
 }
 
@@ -9,6 +10,7 @@ export const syncErrorWrapper = (fn: RequestHandler): RequestHandler => {
         try {
             fn(req, res, next);
         } catch (err) {
+            logError(err);
             next(err);
         }
     };
@@ -16,6 +18,9 @@ export const syncErrorWrapper = (fn: RequestHandler): RequestHandler => {
 
 export const asyncErrorWrapper = (fn: AsyncRequestHandler): RequestHandler => {
     return (req, res, next) => {
-        fn(req, res, next).catch(next);
+        fn(req, res, next).catch((err) => {
+            logError(err);
+            next(err);
+        });
     };
 };

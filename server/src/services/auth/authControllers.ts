@@ -1,7 +1,9 @@
 import { RequestHandler } from "express";
 import { HttpStatusCode } from "../../error/HttpStatusCodes";
-import { generateGoogleUrl } from "./authServices";
-import { syncErrorWrapper } from "../../error/errorWrapper";
+import { authenticateWithGoogle, generateGoogleUrl } from "./authServices";
+import { AsyncRequestHandler, asyncErrorWrapper, syncErrorWrapper } from "../../error/errorWrapper";
+import { z } from "zod";
+import { googleCallbackValidator } from "./authValidators";
 
 const generateGoogleUrlController: RequestHandler = (req, res) => {
     const url = generateGoogleUrl();
@@ -9,13 +11,28 @@ const generateGoogleUrlController: RequestHandler = (req, res) => {
     res.status(HttpStatusCode.OK).send(url);
 };
 
-const authenticateWithGoogleController: RequestHandler = (req, res) => {
-    console.log(req.query);
+const authenticateWithGoogleController: AsyncRequestHandler = async (req, res) => {
+    const { query } = req as unknown as z.infer<typeof googleCallbackValidator>;
 
-    res.status(HttpStatusCode.OK).send("OKAY");
+    const user = await authenticateWithGoogle(query.code);
+
+    res.status(HttpStatusCode.OK).send("Success");
+};
+
+const checkAuthController: AsyncRequestHandler = async (req, res) => {
+    setTimeout(() => {
+        res.status(HttpStatusCode.OK).send({
+            _id: "",
+            firstName: "caleb",
+            lastName: "justice",
+            email: "",
+            permissions: [],
+        });
+    }, 1000);
 };
 
 export default {
     generateGoogleUrlController: syncErrorWrapper(generateGoogleUrlController),
-    authenticateWithGoogleController: syncErrorWrapper(authenticateWithGoogleController),
+    authenticateWithGoogleController: asyncErrorWrapper(authenticateWithGoogleController),
+    checkAuthController: asyncErrorWrapper(checkAuthController),
 };
