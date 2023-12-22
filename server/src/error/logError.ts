@@ -6,7 +6,7 @@ export const logError = (error: any) => {
     if (axios.isAxiosError(error)) {
         console.log(error.response?.data);
     } else if (error instanceof AppError) {
-        console.log(error.message, "\n", error.name);
+        console.log(error.name, "\n", error.message);
     } else {
         console.log(error);
     }

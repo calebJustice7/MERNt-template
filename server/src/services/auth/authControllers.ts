@@ -16,6 +16,7 @@ const authenticateWithGoogleController: AsyncRequestHandler = async (req, res) =
     const { query } = req as unknown as z.infer<typeof googleCallbackValidator>;
 
     const user = await authenticateWithGoogle(query.code);
+
     const newUser = await upsertUser(user);
 
     if (!newUser) {
@@ -28,15 +29,14 @@ const authenticateWithGoogleController: AsyncRequestHandler = async (req, res) =
 };
 
 const checkAuthController: AsyncRequestHandler = async (req, res) => {
-    const user = await getUserFromSession(req.session.user);
-
-    if (!user) {
+    if (!req.app.locals.user) {
         req.session.destroy(() => {});
         res.clearCookie("connect.sid");
-        throw new AppError("Invalid Session", "No User id from session", true, 401);
-    } else {
-        res.status(HttpStatusCode.OK).json(user.toObject());
+        res.status(HttpStatusCode.UNAUTHORIZED).send();
+        return;
     }
+
+    res.status(HttpStatusCode.OK).json(req.app.locals.user);
 };
 
 export default {

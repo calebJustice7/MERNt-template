@@ -9,7 +9,7 @@ export default () =>
             path: "/",
             httpOnly: true,
             // maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day
-            maxAge: 1000 * 60 * 0.1, // 30 seconds
+            maxAge: 1000 * 60 * 0.25, // 15 seconds
             sameSite: true,
             secure: process.env.NODE_ENV === "dev" ? false : true,
         },
@@ -17,7 +17,7 @@ export default () =>
         saveUninitialized: false,
         store: MongoStore.create({
             autoRemove: "interval",
-            autoRemoveInterval: 60,
+            autoRemoveInterval: 60, // in minutes
             clientPromise: mongoose.connection.asPromise().then((con) => con.getClient()),
         }),
     });
