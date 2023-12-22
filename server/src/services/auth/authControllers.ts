@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { HttpStatusCode } from "../../error/HttpStatusCodes";
-import { authenticateWithGoogle, generateGoogleUrl, upsertUser, getUserFromSession } from "./authServices";
+import { authenticateWithGoogle, generateGoogleUrl, upsertUser } from "./authServices";
 import { AsyncRequestHandler, asyncErrorWrapper, syncErrorWrapper } from "../../error/errorWrapper";
 import { z } from "zod";
 import { googleCallbackValidator } from "./authValidators";
