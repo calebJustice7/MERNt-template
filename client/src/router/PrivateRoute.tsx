@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../queries/Auth";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -11,14 +11,14 @@ const PrivateRoute = () => {
   );
   const { logout, setUser } = useContext(AuthContext);
   const queryClient = useQueryClient();
+  const location = useLocation();
   const query = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["auth"] });
     setUser(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate]);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (query.isLoading) setStatus("loading");

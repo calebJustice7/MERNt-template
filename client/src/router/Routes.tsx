@@ -15,7 +15,7 @@ const Routes = () => {
       </Route>
 
       <Route element={<PrivateRoute />}>
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

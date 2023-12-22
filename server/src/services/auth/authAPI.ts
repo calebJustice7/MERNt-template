@@ -2,7 +2,6 @@ import express from "express";
 import authC from "./authControllers";
 import { validate } from "../../helpers/validate";
 import { googleCallbackValidator } from "./authValidators";
-import { z } from "zod";
 
 const router = express.Router();
 

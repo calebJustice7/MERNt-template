@@ -2,11 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import api from "../api/api";
 
 export const useAuth = () => {
-  const getAuth = (): Promise<PartialUser> => {
+  const QUERY_KEY = ["auth"];
+  const getAuth = async (): Promise<User> => {
     return api.get("/auth").then((res) => res.data);
   };
 
-  return useQuery({ queryKey: ["auth"], queryFn: getAuth, retry: false });
+  return useQuery({ queryKey: QUERY_KEY, queryFn: getAuth, retry: false });
 };
 
 export const useGetGoogleRedirect = () => {

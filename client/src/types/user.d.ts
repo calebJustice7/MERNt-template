@@ -1,7 +1,9 @@
-interface PartialUser {
-  _id: string;
-  firstName: string;
-  lastName: string;
+interface User {
+  name: string;
   email: string;
-  permissions: string[];
+  picture: string;
+  google_identifier: string;
+  permissions: [];
 }
+
+interface UserFull extends User, Doc {}

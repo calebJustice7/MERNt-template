@@ -4,7 +4,7 @@ import ensureEnv from "./helpers/ensureEnv";
 import authRouter from "./services/auth/authAPI";
 import errorMiddleware from "./error/errorMiddleware";
 import cors from "cors";
-import cookieParser from "cookie-parser";
+import sessionMiddleware from "./auth/sessionMiddleware";
 
 class Server {
     app: Express;
@@ -18,7 +18,7 @@ class Server {
     }
 
     initializeEndpoints(): void {
-        this.app.use(cookieParser());
+        this.app.use(sessionMiddleware());
         this.app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
         this.app.use(this.base_uri + "/auth", authRouter);
         this.app.use(errorMiddleware);

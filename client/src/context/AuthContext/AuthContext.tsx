@@ -5,8 +5,8 @@ interface Props {
 }
 
 interface IAuthContext {
-  user: PartialUser | null;
-  setUser: (user: PartialUser | null) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
   logout: () => void;
   isAuthenticated: () => boolean;
 }
@@ -21,7 +21,7 @@ const initialValue = {
 const AuthContext = createContext<IAuthContext>(initialValue);
 
 const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<PartialUser | null>(initialValue.user);
+  const [user, setUser] = useState<User | null>(initialValue.user);
 
   const logout = () => {
     setUser(null);

@@ -1,5 +1,5 @@
-// import { useContext } from "react";
-// import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 
 function Profile() {
@@ -8,7 +8,7 @@ function Profile() {
   return (
     <>
       <div className="text-7xl bg-success text-black">Profile Page</div>
-      <Link to="/home">Home Page</Link>
+      <Link to="/">Home Page</Link>
     </>
   );
 }
