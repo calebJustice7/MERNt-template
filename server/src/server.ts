@@ -5,6 +5,7 @@ import authRouter from "./services/auth/authAPI";
 import errorMiddleware from "./error/errorMiddleware";
 import cors from "cors";
 import sessionMiddleware from "./auth/sessionMiddleware";
+import { envVars } from "./config";
 
 class Server {
     app: Express;
@@ -24,13 +25,21 @@ class Server {
         this.app.use(errorMiddleware);
     }
 
+    verifyEnv(): void {
+        envVars.forEach((envVar) => {
+            ensureEnv(envVar);
+        });
+    }
+
     async initializeDatabase() {
         await mongoose.connect(this.mongo_uri);
         console.log("DB Connected");
     }
 
     async start(): Promise<void> {
-        const port = process.env.PORT || 3000;
+        this.verifyEnv();
+
+        const port = Number(ensureEnv("PORT"));
 
         this.initializeEndpoints();
 

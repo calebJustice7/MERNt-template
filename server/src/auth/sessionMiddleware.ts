@@ -1,17 +1,18 @@
 import mongoose from "mongoose";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import ensureEnv from "../helpers/ensureEnv";
 
 export default () =>
     session({
-        secret: process.env.SESSION_SECRET || "",
+        secret: ensureEnv("SESSION_SECRET"),
         cookie: {
             path: "/",
             httpOnly: true,
-            // maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day
-            maxAge: 1000 * 60 * 0.25, // 15 seconds
+            maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day
+            // maxAge: 1000 * 60 * 0.25, // 15 seconds
             sameSite: true,
-            secure: process.env.NODE_ENV === "dev" ? false : true,
+            secure: ensureEnv("NODE_ENV") === "dev" ? false : true,
         },
         resave: false,
         saveUninitialized: false,

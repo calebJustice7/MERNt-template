@@ -5,6 +5,7 @@ import { AsyncRequestHandler, asyncErrorWrapper, syncErrorWrapper } from "../../
 import { z } from "zod";
 import { googleCallbackValidator } from "./authValidators";
 import AppError from "../../error/AppError";
+import ensureEnv from "../../helpers/ensureEnv";
 
 const generateGoogleUrlController: RequestHandler = (req, res) => {
     const url = generateGoogleUrl();
@@ -25,7 +26,7 @@ const authenticateWithGoogleController: AsyncRequestHandler = async (req, res) =
 
     req.session.user = newUser.toObject()._id;
     req.session.save();
-    res.status(HttpStatusCode.OK).redirect("http://localhost:5173/login");
+    res.status(HttpStatusCode.OK).redirect(`${ensureEnv("BASE_URL")}/login`);
 };
 
 const checkAuthController: AsyncRequestHandler = async (req, res) => {
