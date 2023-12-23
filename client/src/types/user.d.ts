@@ -3,7 +3,7 @@ interface User {
   email: string;
   picture: string;
   google_identifier: string;
-  permissions: [];
+  role: string;
 }
 
 interface UserFull extends User, Doc {}

@@ -1,4 +1,5 @@
 import { types } from "mongoose";
+import { actions, subjects } from "../auth/appAbility";
 
 declare global {
     interface ObjectId extends types.ObjectId {}
@@ -8,4 +9,7 @@ declare global {
         updated_at: Date;
         _id: string | ObjectId;
     }
+
+    type Actions = typeof actions;
+    type Subjects = typeof subjects;
 }

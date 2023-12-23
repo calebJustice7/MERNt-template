@@ -10,6 +10,6 @@ router.get("/google/generate-url", authC.generateGoogleUrlController);
 
 router.get("/google/callback", validate(googleCallbackValidator), authC.authenticateWithGoogleController);
 
-router.get("/", authMiddleware, authC.checkAuthController);
+router.get("/", authMiddleware(), authC.checkAuthController);
 
 export default router;

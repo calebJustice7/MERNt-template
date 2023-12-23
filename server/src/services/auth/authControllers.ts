@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { HttpStatusCode } from "../../error/HttpStatusCodes";
+import { HttpStatusCode } from "../../consts/HttpStatusCodes";
 import { authenticateWithGoogle, generateGoogleUrl, upsertUser } from "./authServices";
 import { AsyncRequestHandler, asyncErrorWrapper, syncErrorWrapper } from "../../error/errorWrapper";
 import { z } from "zod";

@@ -5,7 +5,7 @@ const UsersSchema = new Schema<UserFull>({
     name: { type: String, required: true },
     picture: { type: String, required: true },
     google_identifier: { type: String, required: true },
-    permissions: { type: [String], default: () => [] },
+    role: { type: Schema.Types.ObjectId, required: true },
     created_at: { type: Date, default: () => new Date() },
     updated_at: { type: Date, default: () => new Date() },
 });

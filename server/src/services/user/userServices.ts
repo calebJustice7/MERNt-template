@@ -16,3 +16,7 @@ export const updateUserById = async (_id: ObjectId, update: UpdateQuery<UserFull
 export const getUserById = (id: ObjectId) => {
     return userDAL.getUserById(id);
 };
+
+export const getUserAndPermissions = (id: ObjectId) => {
+    return userDAL.getUserAndPermissions(id);
+};

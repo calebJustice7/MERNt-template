@@ -9,7 +9,10 @@ axiosInstance.interceptors.response.use(
     return Promise.resolve(val);
   },
   (error) => {
-    console.log(error);
+    if (import.meta.env.MODE === "development") {
+      console.log(error);
+    }
+
     return Promise.reject(error);
   },
 );

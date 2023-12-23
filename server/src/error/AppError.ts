@@ -1,4 +1,4 @@
-import { HttpStatusCode } from "./HttpStatusCodes";
+import { HttpStatusCode } from "../consts/HttpStatusCodes";
 
 class AppError extends Error {
     public readonly name: string;

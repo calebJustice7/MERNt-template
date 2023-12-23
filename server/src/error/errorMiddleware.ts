@@ -1,26 +1,43 @@
-import { ErrorRequestHandler, Response } from "express";
+import { ErrorRequestHandler, Request, Response } from "express";
 import AppError from "./AppError";
 import ensureEnv from "../helpers/ensureEnv";
+import { ForbiddenError } from "@casl/ability";
+import { HttpStatusCode } from "../consts/HttpStatusCodes";
+import { NextFunction } from "express-serve-static-core";
+import { logError } from "./logError";
 
-const handleError = (err: unknown, res: Response) => {
-    if (err instanceof AppError) {
-        res.status(err.httpStatusCode).send({
-            statusCode: err.httpStatusCode,
-            message: ensureEnv("NODE_ENV") === "dev" ? err.message : err.name,
-        });
-    } else if (err instanceof Error) {
-        res.status(500).send({ statusCode: 500, message: err.message });
-    } else {
-        res.status(500).send({ statusCode: 500, message: "Something went wrong" });
-    }
-};
-
-const errorMiddleware: ErrorRequestHandler = (err, req, res, next) => {
+export const errorMiddleware: ErrorRequestHandler = (err: unknown, req: Request, res: Response, next: NextFunction) => {
     if (res.headersSent) {
         return next(err);
     }
 
-    handleError(err, res);
+    logError(err);
+    let statusCode: HttpStatusCode;
+    let message: string;
+
+    if (err instanceof AppError) {
+        statusCode = err.httpStatusCode;
+        message = ensureEnv("NODE_ENV") === "dev" ? err.message : err.name;
+
+        if (err.httpStatusCode === HttpStatusCode.UNAUTHORIZED) {
+            req.session.destroy(() => {});
+            res.clearCookie("connect.sid");
+        }
+    } else if (err instanceof ForbiddenError) {
+        statusCode = HttpStatusCode.FORBIDDEN;
+        message = "Insufficient permissions";
+    } else if (err instanceof Error) {
+        statusCode = HttpStatusCode.INTERNAL_SERVER;
+        message = err.message;
+    } else {
+        statusCode = HttpStatusCode.INTERNAL_SERVER;
+        message = "Something went wrong";
+    }
+
+    res.status(statusCode).send({
+        statusCode,
+        message,
+    });
 };
 
 export default errorMiddleware;

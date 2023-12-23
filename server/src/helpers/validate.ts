@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { z } from "zod";
-import { HttpStatusCode } from "../error/HttpStatusCodes";
+import { HttpStatusCode } from "../consts/HttpStatusCodes";
 
 export const validate =
     (schema: z.AnyZodObject): RequestHandler =>

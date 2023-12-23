@@ -2,7 +2,8 @@ import ensureEnv from "../../helpers/ensureEnv";
 import toObjectId from "../../helpers/toObjectId";
 import { UserResponse } from "../../sdks/google/response";
 import { getAccessTokenFromCode, getUser } from "../google/googleServices";
-import { createUser, getUsers, updateUserById, getUserById } from "../user/userServices";
+import { getDefaultRole } from "../role/roleServices";
+import { createUser, getUsers, updateUserById, getUserAndPermissions } from "../user/userServices";
 
 export const generateGoogleUrl = () => {
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${ensureEnv(
@@ -24,12 +25,14 @@ export const upsertUser = async (google_user: UserResponse) => {
     const user = await getUsers({ google_identifier: google_user.sub });
 
     if (!user || !user.length) {
+        const role = await getDefaultRole();
+
         return createUser({
             name: google_user.name,
             email: google_user.email,
             picture: google_user.picture,
             google_identifier: google_user.sub,
-            permissions: [],
+            role: role._id,
         });
     } else {
         return updateUserById(user[0]._id, {
@@ -43,5 +46,5 @@ export const upsertUser = async (google_user: UserResponse) => {
 export const getUserFromSession = async (userId?: ObjectId | string) => {
     if (!userId) return null;
 
-    return getUserById(toObjectId(userId));
+    return getUserAndPermissions(toObjectId(userId));
 };

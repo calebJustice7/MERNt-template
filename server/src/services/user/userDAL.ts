@@ -22,9 +22,33 @@ const getUserById = async (id: ObjectId) => {
     return user;
 };
 
+const getUserAndPermissions = async (id: ObjectId) => {
+    const users = (await Users.aggregate([
+        { $match: { _id: id } },
+        {
+            $lookup: {
+                from: "roles",
+                as: "full_role",
+                localField: "role",
+                foreignField: "_id",
+            },
+        },
+        {
+            $unwind: "$full_role",
+        },
+    ])) as (UserFull & { full_role: RoleFull })[];
+
+    if (!users || !users.length || !users[0].role) {
+        if (!users) throw new AppError("User OR role not found", `User ${id} not found`, true, 404);
+    }
+
+    return users[0];
+};
+
 export default {
     getUsers,
     createUser,
     updateUserById,
     getUserById,
+    getUserAndPermissions,
 };
