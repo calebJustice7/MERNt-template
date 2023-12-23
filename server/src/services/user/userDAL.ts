@@ -45,10 +45,20 @@ const getUserAndPermissions = async (id: ObjectId) => {
     return users[0];
 };
 
+const findUsers = async (query: FindQuery) => {
+    console.log(query.sort);
+    const usersFn = Users.find(query.where)
+        .skip(query.page * query.pageSize)
+        .sort(query.sort);
+
+    return await usersFn;
+};
+
 export default {
     getUsers,
     createUser,
     updateUserById,
     getUserById,
     getUserAndPermissions,
+    findUsers,
 };

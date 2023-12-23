@@ -20,3 +20,7 @@ export const getUserById = (id: ObjectId) => {
 export const getUserAndPermissions = (id: ObjectId) => {
     return userDAL.getUserAndPermissions(id);
 };
+
+export const findUsers = async (query: FindQuery) => {
+    return userDAL.findUsers(query);
+};

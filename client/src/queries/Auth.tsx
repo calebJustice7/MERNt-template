@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "../api/api";
 
 export const useAuth = () => {
@@ -15,5 +15,13 @@ export const useGetGoogleRedirect = () => {
     return api.get("/auth/google/generate-url").then((res) => res.data);
   };
 
-  return useQuery({ queryKey: ["google-redirect-ur,"], queryFn: () => getAuth(), retry: 1 });
+  return useQuery({ queryKey: ["google-redirect-url"], queryFn: () => getAuth(), retry: 1 });
+};
+
+export const useLogout = () => {
+  const logout = (): Promise<void> => {
+    return api.delete("/auth/logout");
+  };
+
+  return useMutation({ mutationFn: logout });
 };

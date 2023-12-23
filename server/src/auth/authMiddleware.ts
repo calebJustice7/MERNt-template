@@ -16,10 +16,11 @@ const authMiddleware = (action?: Actions[number], subject?: Subjects[number]) =>
 
             if (action && subject) {
                 const ability = createAbility(user.full_role.permissions);
+                res.locals.ability = ability;
                 ForbiddenError.from(ability).throwUnlessCan(action, subject);
             }
 
-            req.app.locals.user = user;
+            res.locals.user = user;
             next();
         } catch (err) {
             handleError(err, req, res, next);

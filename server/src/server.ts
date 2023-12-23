@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import mongoose from "mongoose";
 import ensureEnv from "./helpers/ensureEnv";
 import authRouter from "./services/auth/authAPI";
+import usersRouter from "./services/user/userAPI";
 import errorMiddleware from "./error/errorMiddleware";
 import cors from "cors";
 import sessionMiddleware from "./auth/sessionMiddleware";
@@ -21,7 +22,10 @@ class Server {
     initializeEndpoints(): void {
         this.app.use(sessionMiddleware());
         this.app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+
         this.app.use(this.base_uri + "/auth", authRouter);
+        this.app.use(this.base_uri + "/users", usersRouter);
+
         this.app.use(errorMiddleware);
     }
 

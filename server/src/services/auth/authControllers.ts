@@ -30,18 +30,26 @@ const authenticateWithGoogleController: AsyncRequestHandler = async (req, res) =
 };
 
 const checkAuthController: AsyncRequestHandler = async (req, res) => {
-    if (!req.app.locals.user) {
+    if (!res.locals.user) {
         req.session.destroy(() => {});
         res.clearCookie("connect.sid");
         res.status(HttpStatusCode.UNAUTHORIZED).send();
         return;
     }
 
-    res.status(HttpStatusCode.OK).json(req.app.locals.user);
+    res.status(HttpStatusCode.OK).json(res.locals.user);
+};
+
+const logoutUser: RequestHandler = (req, res) => {
+    req.session.destroy(() => {
+        res.clearCookie("connect.sid");
+        res.status(HttpStatusCode.OK).send();
+    });
 };
 
 export default {
     generateGoogleUrlController: syncErrorWrapper(generateGoogleUrlController),
     authenticateWithGoogleController: asyncErrorWrapper(authenticateWithGoogleController),
     checkAuthController: asyncErrorWrapper(checkAuthController),
+    logoutUser: syncErrorWrapper(logoutUser),
 };
