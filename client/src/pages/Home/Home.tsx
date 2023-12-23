@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
-import { useGetUsers } from "../../queries/User";
+import { Can } from "../../context/AbilityContext";
 
 function Home() {
-  const query = useGetUsers();
-
-  console.log(query.data);
-
   return (
     <>
       <div>Hell ofrom home</div>
+      <Can I="read" a="user">
+        Yes you can
+      </Can>
       <Link to="/profile">Profile Page</Link>
     </>
   );

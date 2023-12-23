@@ -16,7 +16,7 @@ const PrivateRoute = () => {
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["auth"] });
-    setUser(null);
+    // setUser(null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 

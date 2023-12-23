@@ -6,4 +6,8 @@ interface User {
   role: string;
 }
 
+interface UserWithRole extends User {
+  full_role: RoleFull;
+}
+
 interface UserFull extends User, Doc {}

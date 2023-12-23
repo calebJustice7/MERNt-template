@@ -3,7 +3,7 @@ import api from "../api/api";
 
 export const useAuth = () => {
   const QUERY_KEY = ["auth"];
-  const getAuth = async (): Promise<User> => {
+  const getAuth = async (): Promise<UserWithRole> => {
     return api.get("/auth").then((res) => res.data);
   };
 

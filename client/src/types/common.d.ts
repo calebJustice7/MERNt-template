@@ -1,5 +1,5 @@
 // import { types } from "mongoose";
-// import { actions, subjects } from "../auth/appAbility";
+import { actions, subjects } from "../auth/ability";
 
 declare global {
   interface Doc {
@@ -8,6 +8,6 @@ declare global {
     _id: string;
   }
 
-  //   type Actions = typeof actions;
-  //   type Subjects = typeof subjects;
+  type Actions = typeof actions;
+  type Subjects = typeof subjects;
 }

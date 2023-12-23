@@ -46,7 +46,6 @@ const getUserAndPermissions = async (id: ObjectId) => {
 };
 
 const findUsers = async (query: FindQuery) => {
-    console.log(query.sort);
     const usersFn = Users.find(query.where)
         .skip(query.page * query.pageSize)
         .sort(query.sort);
