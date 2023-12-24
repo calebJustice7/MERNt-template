@@ -24,15 +24,20 @@ const PrivateRoute = () => {
     if (query.isLoading) setStatus("loading");
     else if (query.data && !query.error) {
       setStatus("success");
+      localStorage.removeItem("redirect");
       setUser(query.data);
     } else if (query.error && axios.isAxiosError(query.error)) {
+      localStorage.setItem("redirect", location.pathname);
       if (query.error.response?.status === 401) {
         setStatus("bad_token");
         logout();
       } else if (query.error.response?.status === 403) {
         setStatus("permission_denied");
       } else setStatus("unknown_error");
-    } else if (query.error) setStatus("unknown_error");
+    } else if (query.error) {
+      setStatus("unknown_error");
+      localStorage.setItem("redirect", location.pathname);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);

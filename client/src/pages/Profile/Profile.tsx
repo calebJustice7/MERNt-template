@@ -3,7 +3,6 @@ import { AuthContext } from "../../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useLogout } from "../../queries/Auth";
 import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-toastify";
 
 function Profile() {
   const { logout } = useContext(AuthContext);
@@ -15,7 +14,6 @@ function Profile() {
     await query.mutateAsync();
     queryClient.removeQueries({ queryKey: ["auth"] });
     logout();
-    toast.success("logged out");
     navigate("/login");
   };
 

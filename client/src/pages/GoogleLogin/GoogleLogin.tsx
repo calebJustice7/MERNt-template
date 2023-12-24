@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function GoogleLogin() {
   const navigate = useNavigate();
   const authQuery = useAuth();
-  const query = useGetGoogleRedirect();
+  const query = useGetGoogleRedirect(localStorage.getItem("redirect"));
 
   useEffect(() => {
     if (authQuery.data && !authQuery.isLoading && !authQuery.isFetching) {

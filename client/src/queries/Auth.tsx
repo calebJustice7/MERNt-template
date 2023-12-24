@@ -10,9 +10,11 @@ export const useAuth = () => {
   return useQuery({ queryKey: QUERY_KEY, queryFn: getAuth, retry: false });
 };
 
-export const useGetGoogleRedirect = () => {
+export const useGetGoogleRedirect = (redirect: string | null) => {
   const getAuth = (): Promise<string> => {
-    return api.get("/auth/google/generate-url").then((res) => res.data);
+    return api
+      .get("/auth/google/generate-url", { params: { redirect: redirect || undefined } })
+      .then((res) => res.data);
   };
 
   return useQuery({ queryKey: ["google-redirect-url"], queryFn: () => getAuth(), retry: 1 });

@@ -5,10 +5,11 @@ import { getAccessTokenFromCode, getUser } from "../google/googleServices";
 import { getDefaultRole } from "../role/roleServices";
 import { createUser, getUsers, updateUserById, getUserAndPermissions } from "../user/userServices";
 
-export const generateGoogleUrl = () => {
+export const generateGoogleUrl = (redirect?: string) => {
+    const state = redirect ? `&state=${redirect}` : "";
     const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${ensureEnv(
         "GOOGLE_CLIENT_ID",
-    )}&redirect_uri=${ensureEnv("GOOGLE_REDIRECT_URI")}&response_type=code&scope=profile email`;
+    )}&redirect_uri=${ensureEnv("GOOGLE_REDIRECT_URI")}&response_type=code&scope=profile email${state}`;
 
     return url;
 };
