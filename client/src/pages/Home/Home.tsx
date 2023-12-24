@@ -1,14 +1,7 @@
-import { Link } from "react-router-dom";
-import { Can } from "../../context/AbilityContext";
-
 function Home() {
   return (
     <>
-      <div>Hell ofrom home</div>
-      <Can I="read" a="user">
-        Yes you can
-      </Can>
-      <Link to="/profile">Profile Page</Link>
+      <h1 className="text-4xl text-center mt-10">Welcome Home!</h1>
     </>
   );
 }

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useQueryClient } from "@tanstack/react-query";
+import MainLayout from "../Layouts/MainLayout";
 
 const PrivateRoute = () => {
   const [status, setStatus] = useState<"loading" | "unknown_error" | "success" | "bad_token" | "permission_denied">(
@@ -44,7 +45,12 @@ const PrivateRoute = () => {
 
   if (status === "loading") return "Fetching User";
   else if (status === "unknown_error") return "Unknown error";
-  else if (status === "success") return <Outlet />;
+  else if (status === "success")
+    return (
+      <MainLayout>
+        <Outlet />
+      </MainLayout>
+    );
   else if (status === "bad_token") return <Navigate to="/login" />;
   else if (status === "permission_denied") return <Navigate to="/" />;
 };

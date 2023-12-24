@@ -1,29 +1,16 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
-import { useLogout } from "../../queries/Auth";
-import { useQueryClient } from "@tanstack/react-query";
+import { Can } from "../../context/AbilityContext";
 
 function Profile() {
-  const { logout } = useContext(AuthContext);
-  const query = useLogout();
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const logoutUser = async () => {
-    await query.mutateAsync();
-    queryClient.removeQueries({ queryKey: ["auth"] });
-    logout();
-    navigate("/login");
-  };
+  const { user } = useContext(AuthContext);
 
   return (
     <>
-      <div className="text-7xl bg-success text-black">Profile Page</div>
-      <Link to="/">Home Page</Link>
-      <button className="btn btn-primary" onClick={logoutUser}>
-        Logout
-      </button>
+      <div>{user?.email}</div>
+      <Can I="read" a="user">
+        Yes you can
+      </Can>
     </>
   );
 }
