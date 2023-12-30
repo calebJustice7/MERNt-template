@@ -1,0 +1,30 @@
+services:
+  template-ui:
+    build:
+      context: client
+      target: development
+    ports:
+      - 8000:8000
+    stdin_open: true
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: always
+    networks:
+      - react-express
+  template-server: 
+    build:
+      context: server
+      target: development
+    ports:
+      - 4200:4200
+    stdin_open: true
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: always
+    networks:
+      - react-express
+
+networks:
+  react-express:

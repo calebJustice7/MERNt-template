@@ -1,0 +1,7 @@
+# Documentation
+
+To start project: npm run start
+
+To deploy:
+
+- Create ECR Repository For Client and Server

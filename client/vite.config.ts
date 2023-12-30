@@ -6,4 +6,11 @@ import checker from "vite-plugin-checker";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), eslint(), checker({ typescript: true, overlay: false })],
+  server: {
+    host: true,
+    port: 8000,
+    hmr: {
+      // port: 8001,
+    },
+  },
 });
