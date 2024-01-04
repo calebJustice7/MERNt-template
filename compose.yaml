@@ -1,30 +1,38 @@
 services:
-  template-ui:
+  ui:
+    container_name: ui-dev
+    image: ui-dev-image
     build:
       context: client
-      target: development
+      dockerfile: Dockerfile.development
     ports:
       - 8000:8000
     stdin_open: true
     volumes:
-      - ./client:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./client:/app
+      - /app/node_modules
     restart: always
     networks:
       - react-express
-  template-server: 
+    env_file:
+      - ./client/.env
+  server: 
+    container_name: server-dev
+    image: server-dev-image
     build:
       context: server
-      target: development
+      dockerfile: Dockerfile.development
     ports:
       - 4200:4200
     stdin_open: true
     volumes:
-      - ./server:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./server:/app
+      - /app/node_modules
     restart: always
     networks:
       - react-express
+    env_file:
+      - ./server/.env
 
 networks:
   react-express:

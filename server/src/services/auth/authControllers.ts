@@ -25,7 +25,6 @@ const authenticateWithGoogleController: AsyncRequestHandler = async (req, res) =
     if (!newUser) {
         throw new AppError("Invalid Auth", "No user id when upserting user", true, 500);
     }
-    console.log(query.state);
 
     req.session.user = newUser.toObject()._id;
     req.session.save();
