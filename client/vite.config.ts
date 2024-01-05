@@ -4,13 +4,22 @@ import eslint from "vite-plugin-eslint";
 import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), eslint(), checker({ typescript: true, overlay: false })],
-  server: {
-    host: true,
-    port: 8000,
-    hmr: {
-      // port: 8001,
+export default defineConfig(({ mode }) => {
+  // const env = loadEnv(mode, "./", "");
+
+  return {
+    plugins: [react(), eslint(), checker({ typescript: true, overlay: false })],
+    server: {
+      // proxy: {
+      //   "/api": {
+      //     target: `${env.BASE_URL}`,
+      //     changeOrigin: true,
+      //     secure: false,
+      //   },
+      // },
+      host: true,
+      port: 8000,
+      hmr: {},
     },
-  },
+  };
 });

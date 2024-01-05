@@ -1,0 +1,25 @@
+FROM node:18-alpine as BUILDER
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm install
+
+RUN npm run build
+
+FROM node:18-alpine AS FINAL
+
+ENV NODE_ENV=production
+
+WORKDIR /app
+
+COPY --from=builder ./app/dist ./dist
+
+COPY package.json .
+
+COPY package-lock.json .
+
+RUN npm install --production
+
+CMD [ "node", "dist/index.js" ]

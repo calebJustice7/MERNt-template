@@ -1,4 +1,16 @@
 services:
+  # ui:
+  #   container_name: ui-dev
+  #   image: ui-dev-image
+  #   build:
+  #     context: client
+  #     dockerfile: Dockerfile.prod
+  #   healthcheck: 
+  #     test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
+  #     interval: 40s
+  #     start_period: 60s
+  #     retries: 3
+  #     timeout: 30s
   ui:
     container_name: ui-dev
     image: ui-dev-image

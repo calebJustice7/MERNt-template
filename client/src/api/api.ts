@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.MODE === "development" ? "http://localhost:4200/api/v1" : "/api/v1",
+  baseURL: import.meta.env.VITE_BASE_URL + "/api/v1",
 });
 
 axiosInstance.defaults.withCredentials = true;
@@ -11,7 +11,7 @@ axiosInstance.interceptors.response.use(
     return Promise.resolve(val);
   },
   (error) => {
-    if (import.meta.env.MODE === "development") {
+    if (import.meta.env.NODE_ENV === "development") {
       console.log(error);
     }
 
