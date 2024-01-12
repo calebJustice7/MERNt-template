@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL + "/api/v1",
+  baseURL: "/api/v1",
 });
 
 axiosInstance.defaults.withCredentials = true;
