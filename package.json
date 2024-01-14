@@ -1,5 +1,5 @@
 {
-  "name": "@ionrev/pro-tivity",
+  "name": "MERNt-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -22,9 +22,7 @@
   "license": "ISC",
   "homepage": "https://github.com/calebJustice7/MERNt-template#readme",
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "husky": "^8.0.3"
-  },
-  "dependencies": {
-    "pretty-logs": "^0.5.1"
   }
 }
