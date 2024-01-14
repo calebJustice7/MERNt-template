@@ -10,13 +10,9 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), eslint(), checker({ typescript: true, overlay: false })],
     server: {
-      // proxy: {
-      //   "/api": {
-      //     target: `${env.BASE_URL}`,
-      //     changeOrigin: true,
-      //     secure: false,
-      //   },
-      // },
+      proxy: {
+        "/api": "http://localhost:4200",
+      },
       host: true,
       port: 8000,
       hmr: {},
