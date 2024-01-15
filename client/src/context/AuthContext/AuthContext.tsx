@@ -1,35 +1,38 @@
-import { ReactNode, createContext, useState } from "react";
-import { toast } from "react-toastify";
+import { ReactNode, createContext } from "react";
+import { useAuth, useLogout } from "../../queries/Auth";
 
 interface Props {
   children?: ReactNode;
 }
 
-interface IAuthContext {
+export interface IAuthContext {
+  status: "loading" | "unauthenticated" | "authenticated" | "error";
   user: UserWithRole | null;
-  setUser: (user: UserWithRole | null) => void;
   logout: () => void;
 }
 
 const initialValue = {
+  status: "loading",
   user: null,
-  setUser: () => {},
-  logout: () => {},
-};
+  logout: undefined!,
+} as const;
 
 const AuthContext = createContext<IAuthContext>(initialValue);
 
 const AuthProvider = ({ children }: Props) => {
-  const [user, setUser] = useState<UserWithRole | null>(initialValue.user);
+  const query = useAuth();
+  const logout = useLogout();
 
-  const logout = () => {
-    if (user) {
-      toast.error("Login session expired");
-    }
-    setUser(null);
-  };
+  const status = (() => {
+    if (query.isLoading) return "loading";
+    if (query.isError) return "error";
+    if (query.isSuccess) return query.data.status;
+    return "error";
+  })();
 
-  return <AuthContext.Provider value={{ user, setUser, logout }}>{children}</AuthContext.Provider>;
+  const user = query.isSuccess ? query.data.user : null;
+
+  return <AuthContext.Provider value={{ status, user, logout: logout.mutate }}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthProvider };

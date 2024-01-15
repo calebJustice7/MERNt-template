@@ -6,6 +6,7 @@ import { z } from "zod";
 import { googleCallbackValidator, generateGoogleUrlValidator } from "./authValidators";
 import AppError from "../../error/AppError";
 import ensureEnv from "../../helpers/ensureEnv";
+import { validateSession } from "../../auth/authMiddleware";
 
 const generateGoogleUrlController: RequestHandler = (req, res) => {
     const { query } = req as unknown as z.infer<typeof generateGoogleUrlValidator>;
@@ -32,14 +33,14 @@ const authenticateWithGoogleController: AsyncRequestHandler = async (req, res) =
 };
 
 const checkAuthController: AsyncRequestHandler = async (req, res) => {
-    if (!res.locals.user) {
-        req.session.destroy(() => {});
-        res.clearCookie("connect.sid");
-        res.status(HttpStatusCode.UNAUTHORIZED).send();
+    const user = await validateSession(req, res, false);
+
+    if (user) {
+        res.status(HttpStatusCode.OK).json({ status: "authenticated", user });
         return;
     }
 
-    res.status(HttpStatusCode.OK).json(res.locals.user);
+    res.status(HttpStatusCode.OK).json({ status: "unauthenticated", user: null });
 };
 
 const logoutUser: RequestHandler = (req, res) => {

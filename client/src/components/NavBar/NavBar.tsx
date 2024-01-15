@@ -1,20 +1,15 @@
 import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import { useLogout } from "../../queries/Auth";
-import { useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Can } from "../../context/AbilityContext";
 
 function NavBar() {
-  const { logout } = useContext(AuthContext);
-  const query = useLogout();
+  const { status, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const logoutUser = async () => {
-    await query.mutateAsync();
-    queryClient.removeQueries({ queryKey: ["auth"] });
     logout();
-    navigate("/login");
+    navigate({ to: "/login" });
   };
 
   return (
@@ -39,12 +34,16 @@ function NavBar() {
           </div>
           <div className="flex-none">
             <ul className="flex items-center">
-              <button className="btn mr-7 bg-base-100">
-                <Link to="/profile">Profile</Link>
-              </button>
-              <button onClick={logoutUser} className="btn btn-secondary text-secondary-content">
-                Logout
-              </button>
+              <Can I="read" a="user">
+                <button className="btn mr-7 bg-base-100">
+                  <Link to="/profile">Profile</Link>
+                </button>
+              </Can>
+              {status === "authenticated" && (
+                <button onClick={logoutUser} className="btn btn-secondary text-secondary-content">
+                  Logout
+                </button>
+              )}
             </ul>
           </div>
         </div>

@@ -1,16 +1,18 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  Link,
+  // useNavigate
+} from "@tanstack/react-router";
 import { useAuth, useGetGoogleRedirect } from "../../queries/Auth";
-import { Link } from "react-router-dom";
 
 function GoogleLogin() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const authQuery = useAuth();
   const query = useGetGoogleRedirect(localStorage.getItem("redirect"));
 
   useEffect(() => {
     if (authQuery.data && !authQuery.isLoading && !authQuery.isFetching) {
-      navigate("/");
+      // navigate({ to: "/" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authQuery.data]);

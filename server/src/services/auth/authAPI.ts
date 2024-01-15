@@ -10,7 +10,7 @@ router.get("/google/generate-url", validate(generateGoogleUrlValidator), authC.g
 
 router.get("/google/callback", validate(googleCallbackValidator), authC.authenticateWithGoogleController);
 
-router.get("/", authMiddleware(), authC.checkAuthController);
+router.get("/", authC.checkAuthController);
 
 router.delete("/logout", authMiddleware(), authC.logoutUser);
 

@@ -1,7 +1,7 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { ReactNode, createContext } from "react";
 import { createContextualCan } from "@casl/react";
 import { AppAbility, createAbility } from "../../auth/ability";
-import { AuthContext } from "../AuthContext";
+import { useAuth } from "../../queries/Auth";
 
 const initialAbility = createAbility([]);
 
@@ -13,12 +13,9 @@ interface Props {
   children?: ReactNode;
 }
 export const AbilityProvider = ({ children }: Props) => {
-  const { user } = useContext(AuthContext);
-  const [ability, setAbility] = useState<AppAbility>(initialAbility);
+  const query = useAuth();
 
-  useEffect(() => {
-    setAbility(createAbility(user?.full_role.permissions || []));
-  }, [user]);
+  const ability = query.isSuccess ? query.data.ability : initialAbility;
 
   return <AbilityContext.Provider value={ability}>{children}</AbilityContext.Provider>;
 };
