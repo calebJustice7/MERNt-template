@@ -12,7 +12,7 @@ export default () =>
             maxAge: 1000 * 60 * 60 * 24 * 1, // 1 day
             // maxAge: 1000 * 60 * 0.25, // 15 seconds
             sameSite: true,
-            secure: ensureEnv("NODE_ENV") === "dev" ? false : true,
+            secure: ensureEnv("NODE_ENV") === "development" ? false : true,
         },
         resave: false,
         saveUninitialized: false,

@@ -47,15 +47,15 @@ export const useGetGoogleRedirect = (redirect: string | null) => {
 export const useLogout = () => {
   const queryClient = useQueryClient();
 
-  const logout = (): Promise<void> => {
-    return api.delete("/auth/logout");
+  const logout = async (): Promise<void> => {
+    return await api.delete("/auth/logout");
   };
 
   return useMutation({
     mutationFn: logout,
     onSettled() {
       toast.success("Logged out");
-      queryClient.invalidateQueries({ queryKey: AUTH_QUERY_KEY });
+      queryClient.removeQueries({ queryKey: AUTH_QUERY_KEY });
     },
   });
 };

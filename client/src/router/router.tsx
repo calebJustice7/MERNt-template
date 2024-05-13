@@ -10,7 +10,6 @@ import {
 
 import Home from "../pages/Home";
 import GoogleLogin from "../pages/GoogleLogin";
-import Profile from "../pages/Profile";
 import MainLayout from "../Layouts/MainLayout";
 import PageNotFound from "../pages/PageNotFound";
 import { actions, subjects } from "../auth/ability";
@@ -59,19 +58,12 @@ const loginRoute = new Route({
   component: GoogleLogin,
 });
 
-const profileRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "profile",
-  component: Profile,
-  beforeLoad: requireAuth("read", "user"),
-});
-
 const notFoundRoute = new NotFoundRoute({
   getParentRoute: () => rootRoute,
   component: PageNotFound,
 });
 
-const routeTree = rootRoute.addChildren([indexRoute, loginRoute, profileRoute]);
+const routeTree = rootRoute.addChildren([indexRoute, loginRoute]);
 
 const router = new Router({
   routeTree,

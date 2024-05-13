@@ -32,7 +32,7 @@ const AuthProvider = ({ children }: Props) => {
 
   const user = query.isSuccess ? query.data.user : null;
 
-  return <AuthContext.Provider value={{ status, user, logout: logout.mutate }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ status, user, logout: logout.mutateAsync }}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthProvider };
