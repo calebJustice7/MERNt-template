@@ -1,7 +1,13 @@
 # Documentation
 
+Setup
+
+- npm run prepare
+- cd ./client && npm run install
+- cd ../server && npm run install
+- Rename .template.env in both client and server to just .env and populate values. (the MONGO_URI env works already if running a local mongodb instance on your machine, and you want to connect to that rather than a remote, or containerized instance)
+- Add the GOOGLE_REDIRECT_URI to your approved URI's in Google Cloud.
+
 To start project: npm run start
 
-To deploy:
-
-- Create ECR Repository For Client and Server
+Every commit runs lint via husky
