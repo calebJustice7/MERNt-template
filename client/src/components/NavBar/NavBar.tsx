@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Can } from "../../context/AbilityContext";
+// import { Can } from "../../context/AbilityContext";
 
 function NavBar() {
   const { status, logout } = useContext(AuthContext);
@@ -35,11 +35,11 @@ function NavBar() {
           </div>
           <div className="flex-none">
             <ul className="flex items-center">
-              <Can I="read" a="user">
+              {/* <Can I="read" a="user">
                 <button className="btn mr-7 bg-base-100">
                   <Link to="/profile">Profile</Link>
                 </button>
-              </Can>
+              </Can> */}
               {status === "authenticated" && (
                 <button onClick={logoutUser} className="btn btn-secondary text-secondary-content">
                   Logout
